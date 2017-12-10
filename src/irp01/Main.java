@@ -7,16 +7,9 @@ import org.apache.lucene.queryparser.classic.ParseException;
 
 public class Main {
 	String indexPath; // Index path
-	String dataPath; // Data path
 	Indexer indexer; // Object of Indexer
 	Searcher searcher; // Object of Searcher
 
-	// initialize the data and index path
-	public Main() {
-		String path = new File("").getAbsolutePath();
-		dataPath = path + "\\data";
-		indexPath = path + "\\index";
-	}
 
 	// INPUT : Null
 	// OUTPUT : String
@@ -48,10 +41,10 @@ public class Main {
 			String query = args[3];
 
 			app.SetIndexPath(args[1]); // Set Index path
-			// app.SetIndexPath("/Users/ollostudio/Desktop/LuceneSearch/IR_P01/Index");
 			deleteIndex(new File(app.getIndexPath())); // Delete existing files
-			// app.createIndex("/Users/ollostudio/Desktop/LuceneSearch/IR_P01/Data");
+			hashLine();
 			app.createIndex(args[0]); // Set Data path
+			hashLine();
 			if (args[2].equals("VS")) {
 				app.search(Indexer.StringPorterStemmer(query), false);
 			} else if (args[2].equals("OR")) {
@@ -59,7 +52,7 @@ public class Main {
 			} else {
 				System.out.println("Invalid model name");
 			}
-
+			hashLine();
 		} catch (IOException e) {
 			System.out.println(e);
 			e.printStackTrace();
@@ -96,7 +89,6 @@ public class Main {
 		indexer = new Indexer(indexPath);
 		indexer.createIndex(dataDirPath, new FileTypeGuard());
 		indexer.close();
-		hashLine();
 		System.out.println("New indexes created.");
 	}
 }
