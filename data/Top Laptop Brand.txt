@@ -4,7 +4,12 @@ Dell
 HP
 Acer
 Apple
+Apple
+Apple
+MSI
+MSI
 MSI
 Razer
 Samsung
 Microsoft
+Samsung

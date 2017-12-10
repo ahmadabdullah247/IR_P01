@@ -3,6 +3,7 @@ package irp01;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.CorruptIndexException;
@@ -16,6 +17,9 @@ import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.search.similarities.BM25Similarity;
+import org.apache.lucene.search.similarities.ClassicSimilarity;
+//import org.apache.lucene.search.similarities.TFIDFSimilarity;
 
 public class Searcher {
 	IndexSearcher indexSearcher;
@@ -39,5 +43,61 @@ public class Searcher {
 		query = queryParser.parse(searchQuery);
 		return indexSearcher.search(query, LuceneInitializr.MAX_SEARCH);
 	}
+
+	public void tdf_BM25_search(String searchQuery, Boolean isBM25) throws IOException, ParseException {
+		// Query the index for the search result and return the ranked results
+		if (isBM25) {
+			this.indexSearcher.setSimilarity(new BM25Similarity());
+		} else {
+			this.indexSearcher.setSimilarity(new ClassicSimilarity());
+		}
+		queryParser = new QueryParser(LuceneInitializr.CONTENTS, new StandardAnalyzer());
+		query = queryParser.parse(searchQuery);
+		ScoreDoc[] hits = this.indexSearcher.search(query, 20).scoreDocs;
+		int hitCount = hits.length;
+		for (int i = 0; i < hitCount; i++) {
+			Document doc = this.indexSearcher.doc(hits[i].doc);
+			System.out.println(doc.get("contents"));
+		}
+	}
+
+	// public void tfidf (String indexDirectoryPath) throws IOException,
+	// ParseException {
+	// Analyzer analyzer = new StandardAnalyzer();
+	// String tb1 = "Samsung";
+	// Directory dir = FSDirectory.open(Paths.get(indexDirectoryPath));
+	// IndexReader reader = DirectoryReader.open(dir);
+	//
+	// this.indexSearcher = new IndexSearcher(reader);
+	//// System.out.println(this.indexSearcher.search(query,
+	// LuceneInitializr.MAX_SEARCH));
+	// this.indexSearcher.setSimilarity(new ClassicSimilarity());
+	// _search(indexSearcher, tb1, analyzer);
+	//
+	// }
+	// public static void _search(IndexSearcher searcher, String queryString,
+	// Analyzer analyzer) throws IOException, ParseException {
+	// QueryParser queryParser = new QueryParser(LuceneInitializr.CONTENTS, new
+	// StandardAnalyzer());
+	// Query query = queryParser.parse(queryString);
+	// ScoreDoc[] hits = searcher.search(query, 20).scoreDocs;
+	// int hitCount = hits.length;
+	// System.out.println(hits.length);
+	// for (int i = 0; i < hitCount; i++) {
+	// Document doc = searcher.doc(hits[i].doc);
+	// System.out.println(doc.get("contents"));
+	// }
+	//
+	//// QueryParser parser = new QueryParser("tb", analyzer);
+	//// Query query = parser.parse(queryString);
+	//// ScoreDoc[] hits = searcher.search(query, 20).scoreDocs;
+	//// int hitCount = hits.length;
+	//// System.out.println(query);
+	//// for (int i = 0; i < hitCount; i++) {
+	//// Document doc = searcher.doc(hits[i].doc);
+	//// System.out.println("X :: "+i);
+	//// System.out.println(doc.get("id"));
+	//// }
+	// }
 
 }

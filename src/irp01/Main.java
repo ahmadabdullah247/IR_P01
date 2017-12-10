@@ -42,6 +42,7 @@ public class Main {
 		try {
 			app = new Main();
 			String choice = "";
+			String query = "";
 			Scanner scanner = new Scanner(System.in); // Reading from System.in
 			// app.SetIndexPath(args[0]);
 			app.SetIndexPath("/Users/ollostudio/Desktop/LuceneSearch/IR_P01");
@@ -50,24 +51,31 @@ public class Main {
 				hashLine();
 				System.out.println("Press : ");
 				System.out.println("1. to create new indexes.");
-				System.out.println("2. to use existing indexes.");
-				System.out.println("3. to exit.");
+				System.out.println("2. to search.");
+				System.out.println("5. to exit.");
 				choice = scanner.nextLine();
 				hashLine();
 				switch (choice) {
 				case "1":
 					System.out.println("Index path :: " + app.getIndexPath());
-					deleteIndex(new File(app.getIndexPath()));	// Deletes all files in the path.
+					deleteIndex(new File(app.getIndexPath())); // Deletes all files in the path.
 					// app.createIndex(args[0]);
-					app.createIndex("/Users/ollostudio/Desktop/LuceneSearch/IR_P01");		// Create new indexes.
+					app.createIndex("/Users/ollostudio/Desktop/LuceneSearch/IR_P01"); // Create new indexes.
+					break;
 				case "2":
 					try {
 						hashLine();
-						System.out.println("Enter Search Query ::");
+						System.out.println("Enter:");
+						System.out.println("1. to use TF.IDF");
+						System.out.println("2. to use BM25");
 						choice = scanner.nextLine();
-						if (!choice.equalsIgnoreCase("")) {
-							System.out.println("Searching Documents for query :: " + choice);
-							app.search(choice + " " + Indexer.StringPorterStemmer(choice));
+						System.out.println("Enter Search Query ::");
+						query = scanner.nextLine();
+						if (!choice.equalsIgnoreCase("") || choice.equalsIgnoreCase("1")
+								|| choice.equalsIgnoreCase("2")) {
+							System.out.println("Searching Documents for query :: " + query);
+							app.search(query + " " + Indexer.StringPorterStemmer(query),
+									Integer.parseInt(choice) == 2 ? true : false);
 						} else {
 							System.out.println("Query string empty. Please provide valid search query.");
 						}
@@ -86,31 +94,14 @@ public class Main {
 			}
 			scanner.close();
 		} catch (IOException e) {
+			System.out.println(e);
 			e.printStackTrace();
 		}
 	}
 
-	private void search(String searchQuery) throws IOException, ParseException {
+	private void search(String searchQuery, Boolean tdf_BM2) throws IOException, ParseException {
 		searcher = new Searcher(indexPath);
-		long startTime = System.currentTimeMillis();
-		TopDocs hits = searcher.search(searchQuery);
-		long endTime = System.currentTimeMillis();
-		int rank = 1;
-		System.out.println(hits.totalHits + " documents found. Time :" + (endTime - startTime));
-		for (ScoreDoc scoreDoc : hits.scoreDocs) {
-			Document doc = searcher.getDocument(scoreDoc);
-			if ((doc.get(LuceneInitializr.FILE_NAME).contains(".html"))
-					|| (doc.get(LuceneInitializr.FILE_NAME).contains(".htm")))
-				System.out.println("Rank(Score):" + rank + "(" + scoreDoc.score + ") File Name(title):"
-						+ doc.get(LuceneInitializr.FILE_NAME) + "(" + doc.get(LuceneInitializr.FILE_HTML_TITLE)
-						+ ") File Path:" + doc.get(LuceneInitializr.FILE_PATH) + "   Time Stamp:"
-						+ doc.get(LuceneInitializr.FILE_TIMESTAMP));
-			else
-				System.out.println("Rank(Score):" + rank + "(" + scoreDoc.score + ") File Name:"
-						+ doc.get(LuceneInitializr.FILE_NAME) + " File Path:" + doc.get(LuceneInitializr.FILE_PATH)
-						+ "   Time Stamp:" + doc.get(LuceneInitializr.FILE_TIMESTAMP));
-			rank++;
-		}
+		searcher.tdf_BM25_search(searchQuery, tdf_BM2);
 	}
 
 	static void deleteIndex(File dir) {
