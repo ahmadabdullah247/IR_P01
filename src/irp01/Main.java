@@ -45,7 +45,7 @@ public class Main {
 			String query = "";
 			Scanner scanner = new Scanner(System.in); // Reading from System.in
 			// app.SetIndexPath(args[0]);
-			app.SetIndexPath("/Users/ollostudio/Desktop/LuceneSearch/IR_P01");
+			app.SetIndexPath("/home/alihashaam/eclipse-workspace/IR_P01");
 
 			while (!choice.equalsIgnoreCase("3")) {
 				hashLine();
@@ -60,7 +60,7 @@ public class Main {
 					System.out.println("Index path :: " + app.getIndexPath());
 					deleteIndex(new File(app.getIndexPath())); // Deletes all files in the path.
 					// app.createIndex(args[0]);
-					app.createIndex("/Users/ollostudio/Desktop/LuceneSearch/IR_P01"); // Create new indexes.
+					app.createIndex("/home/alihashaam/eclipse-workspace/IR_P01"); // Create new indexes.
 					break;
 				case "2":
 					try {
