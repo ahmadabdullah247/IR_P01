@@ -2,8 +2,8 @@
 <classpath>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="/home/alihashaam/eclipse/java-oxygen/eclipse/lucene-7.1.0/dist/lucene-7.1.0-SNAPSHOT/queryparser/lucene-queryparser-7.1.0-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/home/alihashaam/eclipse/java-oxygen/eclipse/lucene-7.1.0/dist/lucene-7.1.0-SNAPSHOT/core/lucene-core-7.1.0-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="/home/alihashaam/eclipse/java-oxygen/eclipse/lucene-7.1.0/dist/lucene-7.1.0-SNAPSHOT/analysis/common/lucene-analyzers-common-7.1.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/Users/ollostudio/Desktop/lucene-7.1.0/analysis/common/lucene-analyzers-common-7.1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/ollostudio/Desktop/lucene-7.1.0/core/lucene-core-7.1.0.jar"/>
+	<classpathentry kind="lib" path="/Users/ollostudio/Desktop/lucene-7.1.0/queryparser/lucene-queryparser-7.1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

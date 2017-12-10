@@ -36,6 +36,7 @@ public class Searcher {
 	}
 
 	public void tdf_BM25_search(String searchQuery, Boolean isBM25) throws IOException, ParseException {
+		System.out.println(searchQuery);
 		// parse the inputed query and rank with either Vector Space Model or Okapi BM25 
 		if (isBM25) {
 			this.indexSearcher.setSimilarity(new BM25Similarity());

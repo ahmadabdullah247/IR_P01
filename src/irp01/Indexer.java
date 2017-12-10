@@ -119,6 +119,7 @@ public class Indexer {
 	}
 
 	public int createIndex(String dataDirPath, FileFilter filter) throws IOException {
+		System.out.println(dataDirPath);
 		/*
 		 * accepts the directory path and creates index in it
 		 * also gets filter as input to make sure what type of files to index
