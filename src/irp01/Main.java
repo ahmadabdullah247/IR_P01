@@ -4,11 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Scanner;
 
-import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexNotFoundException;
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
 
 public class Main {
 	String indexPath; // Index path
@@ -23,15 +20,24 @@ public class Main {
 		indexPath = path + "\\index";
 	}
 
+	// INPUT : Null
+	// OUTPUT : String
+	// DESCRIPTION : returns string path of index folder
 	public String getIndexPath() {
 		return indexPath;
 	}
 
+	// INPUT : String
+	// OUTPUT : Null
+	// DESCRIPTION : Set string path of index folder
 	public void SetIndexPath(String Path) {
 		indexPath = Path + "/index";
 		// indexPath = Path + "\\index";
 	}
 
+	// INPUT : Null
+	// OUTPUT : Null
+	// DESCRIPTION : Print line on console
 	public static void hashLine() {
 		System.out.println(
 				"#########################################################################################################");
@@ -41,31 +47,39 @@ public class Main {
 		Main app;
 		try {
 			app = new Main();
+			Scanner scanner = new Scanner(System.in); // Reading from System.in
 			String choice = "";
 			String query = "";
-			Scanner scanner = new Scanner(System.in); // Reading from System.in
-			// app.SetIndexPath(args[0]);
-			app.SetIndexPath("/home/alihashaam/eclipse-workspace/IR_P01");
 
+			// app.SetIndexPath(args[0]);
+<<<<<<< HEAD
+			app.SetIndexPath("/home/alihashaam/eclipse-workspace/IR_P01");
+=======
+			app.SetIndexPath("/Users/ollostudio/Desktop/LuceneSearch/IR_P01"); // Set Index file path
+>>>>>>> cd318999cf7e250aba54fcd18e541610f929cae2
+
+			// 1. Menu for creating new indexes.
+			// 2. Traversing indexes.
+			// 3. exit program.
 			while (!choice.equalsIgnoreCase("3")) {
 				hashLine();
 				System.out.println("Press : ");
 				System.out.println("1. to create new indexes.");
 				System.out.println("2. to search.");
-				System.out.println("5. to exit.");
+				System.out.println("3. to exit.");
 				choice = scanner.nextLine();
 				hashLine();
 				switch (choice) {
 				case "1":
 					System.out.println("Index path :: " + app.getIndexPath());
-					deleteIndex(new File(app.getIndexPath())); // Deletes all files in the path.
+					deleteIndex(new File(app.getIndexPath())); // Deletes existing indexes.
 					// app.createIndex(args[0]);
 					app.createIndex("/home/alihashaam/eclipse-workspace/IR_P01"); // Create new indexes.
 					break;
 				case "2":
 					try {
-						hashLine();
-						System.out.println("Enter:");
+						// Chose model for ranking result
+						System.out.println("Select ranking model :: ");
 						System.out.println("1. to use TF.IDF");
 						System.out.println("2. to use BM25");
 						choice = scanner.nextLine();
@@ -99,11 +113,17 @@ public class Main {
 		}
 	}
 
+	// INPUT			: String, Boolean
+	// OUTPUT 		: NULL
+	// DESCRIPTION	: Print ranked documents to console
 	private void search(String searchQuery, Boolean tdf_BM2) throws IOException, ParseException {
 		searcher = new Searcher(indexPath);
 		searcher.tdf_BM25_search(searchQuery, tdf_BM2);
 	}
 
+	// INPUT			: Null
+	// OUTPUT 		: Null
+	// DESCRIPTION	: Delete existing indexes 
 	static void deleteIndex(File dir) {
 		try {
 			for (File file : dir.listFiles()) {
@@ -114,9 +134,11 @@ public class Main {
 		} catch (NullPointerException e) {
 			System.out.println("Given path does not has any files.");
 		}
-
 	}
 
+	// INPUT			: String
+	// OUTPUT 		: Null
+	// DESCRIPTION	: create new indexes for documents 
 	private void createIndex(String dataDirPath) throws IOException {
 		indexer = new Indexer(indexPath);
 		int numIndexed;

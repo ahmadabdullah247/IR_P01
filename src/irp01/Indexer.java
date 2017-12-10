@@ -43,8 +43,11 @@ public class Indexer {
 		writer.close();
 	}
 	private Document getDocument(File file) {
+<<<<<<< HEAD
 		// For every document we are storing its file name, title and content in our
 		// index.
+=======
+>>>>>>> cd318999cf7e250aba54fcd18e541610f929cae2
 		Document document = new Document();
 		try {
 			// File Name

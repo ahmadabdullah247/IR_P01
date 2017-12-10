@@ -1,5 +1,6 @@
 package irp01;
 
+
 public class LuceneInitializr {
 	public static final String CONTENTS = "contents";
 	public static final String FILE_NAME = "filename";
