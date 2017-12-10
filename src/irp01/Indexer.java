@@ -42,7 +42,6 @@ public class Indexer {
 	// index.
 	// The content from files are converted into string and
 	private Document getDocument(File file) {
-
 		Document document = new Document();
 		try {
 			// path of the file
