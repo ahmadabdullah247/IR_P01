@@ -54,11 +54,18 @@ public class Searcher {
 		queryParser = new QueryParser(LuceneInitializr.CONTENTS, new StandardAnalyzer());
 		query = queryParser.parse(searchQuery);
 		ScoreDoc[] hits = this.indexSearcher.search(query, 20).scoreDocs;
-		int hitCount = hits.length;
-		for (int i = 0; i < hitCount; i++) {
-			Document doc = this.indexSearcher.doc(hits[i].doc);
-			System.out.println(doc.get("contents"));
-		}
+	    int hitCount = hits.length;
+	    int rank=1;
+	    System.out.println(hitCount + " documents found.");
+	    for(ScoreDoc scoreDoc : hits) {
+	    	Document doc = this.indexSearcher.doc(scoreDoc.doc);
+	        System.out.println("Rank(Score):"+rank+"("+scoreDoc.score+") File Name(title):"+
+	        		doc.get(LuceneInitializr.FILE_NAME)+"("+
+	        		doc.get(LuceneInitializr.FILE_HTML_TITLE)+") File Path:" +
+	        		doc.get(LuceneInitializr.FILE_PATH)+"   Time Stamp:"+
+	        		doc.get(LuceneInitializr.FILE_TIMESTAMP));
+	        rank++;
+	    }
 	}
 
 	// public void tfidf (String indexDirectoryPath) throws IOException,
