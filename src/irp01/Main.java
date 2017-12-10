@@ -52,11 +52,7 @@ public class Main {
 			String query = "";
 
 			// app.SetIndexPath(args[0]);
-<<<<<<< HEAD
 			app.SetIndexPath("/home/alihashaam/eclipse-workspace/IR_P01");
-=======
-			app.SetIndexPath("/Users/ollostudio/Desktop/LuceneSearch/IR_P01"); // Set Index file path
->>>>>>> cd318999cf7e250aba54fcd18e541610f929cae2
 
 			// 1. Menu for creating new indexes.
 			// 2. Traversing indexes.
